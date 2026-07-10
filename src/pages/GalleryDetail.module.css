@@ -1,0 +1,103 @@
+.article {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.imageWrap {
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  background: var(--color-hover);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.body {
+  padding: 28px 32px;
+}
+
+.topMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.content {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.editBtn {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+
+.editBtn:hover {
+  background: var(--color-primary-hover);
+}
+
+.deleteBtn {
+  background: none;
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.deleteBtn:hover {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.status {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 60px 0;
+}
+
+@media (max-width: 480px) {
+  .body { padding: 20px 16px; }
+  .title { font-size: 1.25rem; }
+}

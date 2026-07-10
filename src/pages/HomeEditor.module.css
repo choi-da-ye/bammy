@@ -134,7 +134,7 @@
   transition: background 0.1s, transform 0.1s, border-color 0.1s;
   padding: 0;
 }
-.stickerItem:hover { background: var(--color-hover); transform: scale(1.18); border-color: var(--color-border); }
+.stickerItem:hover { background: var(--color-hover); transform: scale(1.08); border-color: var(--color-border); }
 
 /* ── 배경 그리드 ── */
 .bgGrid {
@@ -150,7 +150,7 @@
   display: flex; align-items: flex-end; justify-content: center;
   padding: 0; background: none;
 }
-.bgItem:hover { transform: scale(1.08); border-color: var(--color-border-strong); }
+.bgItem:hover { transform: scale(1.04); border-color: var(--color-border-strong); }
 .bgItemActive { border-color: var(--color-primary) !important; outline: 2px solid var(--color-primary); outline-offset: 1px; }
 .bgLabel {
   font-size: 0.58rem; font-weight: 700; letter-spacing: -0.01em;
@@ -185,6 +185,27 @@
 .stickerEmoji {
   font-size: min(100cqw, 100cqh);
   line-height: 1; pointer-events: none; user-select: none;
+}
+
+/* ── 말풍선 ── */
+.bubble   { composes: hp-bubble from global; }
+.tail_bl  { composes: hp-tail-bl from global; }
+.tail_br  { composes: hp-tail-br from global; }
+.tail_tl  { composes: hp-tail-tl from global; }
+.tail_tr  { composes: hp-tail-tr from global; }
+
+.bubbleText {
+  margin: 0; width: 100%;
+  white-space: pre-wrap; word-break: break-word; line-height: 1.3;
+  overflow: hidden; pointer-events: none;
+}
+.bubbleEdit {
+  position: absolute; inset: 0;
+  border-radius: 12px; resize: none;
+  padding: 4px 8px; box-sizing: border-box;
+  line-height: 1.3; cursor: text; font-family: inherit;
+  white-space: pre-wrap; word-break: break-word;
+  outline: 2px dashed var(--color-primary);
 }
 
 .textContent {

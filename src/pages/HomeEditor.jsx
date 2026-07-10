@@ -25,6 +25,7 @@ export default function HomeEditor() {
 
   const [elements, setElements] = useState([])
   const [bgColor, setBgColor] = useState('#f7f7f5')
+  const [bgImage, setBgImage] = useState(null)
   const [selected, setSelected] = useState(null)
   const [editing, setEditing] = useState(null)
   const [panel, setPanel] = useState(null)       // 'sticker' | 'bg' | null
@@ -34,8 +35,10 @@ export default function HomeEditor() {
   const [uploading, setUploading] = useState(false)
 
   const selectedEl = elements.find(el => el.id === selected) ?? null
-  const isText  = selectedEl?.type === 'text'
-  const isImage = selectedEl?.type === 'image'
+  const isText     = selectedEl?.type === 'text'
+  const isBubble   = selectedEl?.type === 'bubble'
+  const isImage    = selectedEl?.type === 'image'
+  const isTextLike = isText || isBubble
 
   useEffect(() => {
     if (session === undefined) return
@@ -46,6 +49,7 @@ export default function HomeEditor() {
         setHomepageId(data.id)
         setElements(data.elements ?? [])
         setBgColor(data.bg_color ?? '#f7f7f5')
+        setBgImage(data.bg_image ?? null)
       })
   }, [session])
 
@@ -132,6 +136,17 @@ export default function HomeEditor() {
     setUploading(false)
   }
 
+  function addBubble() {
+    const id = uid()
+    setElements(prev => [...prev, {
+      id, type: 'bubble', x: 20, y: 20, width: 48, height: 20,
+      content: '말풍선',
+      style: { fontSize: 14, fontWeight: 'normal', fontStyle: 'normal', color: '#111111', textAlign: 'center', fontFamily: 'inherit', bgColor: '#ffffff', borderColor: '#111111', tailDir: 'bl', opacity: 1 },
+    }])
+    setSelected(id)
+    setTimeout(() => setEditing(id), 30)
+  }
+
   function addText() {
     const id = uid()
     setElements(prev => [...prev, {
@@ -181,7 +196,7 @@ export default function HomeEditor() {
 
   async function save() {
     setSaving(true)
-    const payload = { user_id: session.user.id, elements, bg_color: bgColor, updated_at: new Date().toISOString() }
+    const payload = { user_id: session.user.id, elements, bg_color: bgColor, bg_image: bgImage, updated_at: new Date().toISOString() }
     if (homepageId) {
       await supabase.from('homepages').update(payload).eq('id', homepageId)
     } else {
@@ -204,26 +219,45 @@ export default function HomeEditor() {
         <button className={styles.propBtn} onClick={duplicate} disabled={!selectedEl}>복제</button>
         <div className={styles.sep} />
 
-        <select className={styles.propSelect} value={selectedEl?.style?.fontFamily ?? 'inherit'} onChange={e => updateStyle(selected, { fontFamily: e.target.value })} disabled={!isText}>
+        <select className={styles.propSelect} value={selectedEl?.style?.fontFamily ?? 'inherit'} onChange={e => updateStyle(selected, { fontFamily: e.target.value })} disabled={!isTextLike}>
           {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
         </select>
-        <input type="number" min={8} max={200} className={styles.propNumber} value={selectedEl?.style?.fontSize ?? 16} onChange={e => updateStyle(selected, { fontSize: Number(e.target.value) })} disabled={!isText} />
-        <button className={`${styles.propBtn} ${styles.bold} ${selectedEl?.style?.fontWeight === 'bold' ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { fontWeight: selectedEl?.style?.fontWeight === 'bold' ? 'normal' : 'bold' })} disabled={!isText}>B</button>
-        <button className={`${styles.propBtn} ${styles.italic} ${selectedEl?.style?.fontStyle === 'italic' ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { fontStyle: selectedEl?.style?.fontStyle === 'italic' ? 'normal' : 'italic' })} disabled={!isText}>I</button>
+        <input type="number" min={8} max={200} className={styles.propNumber} value={selectedEl?.style?.fontSize ?? 16} onChange={e => updateStyle(selected, { fontSize: Number(e.target.value) })} disabled={!isTextLike} />
+        <button className={`${styles.propBtn} ${styles.bold} ${selectedEl?.style?.fontWeight === 'bold' ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { fontWeight: selectedEl?.style?.fontWeight === 'bold' ? 'normal' : 'bold' })} disabled={!isTextLike}>B</button>
+        <button className={`${styles.propBtn} ${styles.italic} ${selectedEl?.style?.fontStyle === 'italic' ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { fontStyle: selectedEl?.style?.fontStyle === 'italic' ? 'normal' : 'italic' })} disabled={!isTextLike}>I</button>
         <div className={styles.sep} />
 
         {['left', 'center', 'right'].map(align => (
-          <button key={align} className={`${styles.propBtn} ${selectedEl?.style?.textAlign === align ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { textAlign: align })} disabled={!isText}>
+          <button key={align} className={`${styles.propBtn} ${selectedEl?.style?.textAlign === align ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { textAlign: align })} disabled={!isTextLike}>
             {align === 'left' ? '←' : align === 'center' ? '↔' : '→'}
           </button>
         ))}
         <div className={styles.sep} />
 
-        <label className={`${styles.colorLabel} ${!isText ? styles.propDisabled : ''}`} title="글자색">
+        <label className={`${styles.colorLabel} ${!isTextLike ? styles.propDisabled : ''}`} title="글자색">
           <span className={styles.colorA} style={{ color: selectedEl?.style?.color ?? '#111' }}>A</span>
-          <input type="color" value={selectedEl?.style?.color ?? '#111111'} onChange={e => updateStyle(selected, { color: e.target.value })} className={styles.colorInput} disabled={!isText} />
+          <input type="color" value={selectedEl?.style?.color ?? '#111111'} onChange={e => updateStyle(selected, { color: e.target.value })} className={styles.colorInput} disabled={!isTextLike} />
         </label>
         <div className={styles.sep} />
+
+        {/* 말풍선 전용 */}
+        {isBubble && (
+          <>
+            <label className={styles.colorLabel} title="배경색">
+              <span>배경</span>
+              <input type="color" value={selectedEl?.style?.bgColor ?? '#ffffff'} onChange={e => updateStyle(selected, { bgColor: e.target.value })} className={styles.colorInput} />
+            </label>
+            <label className={styles.colorLabel} title="테두리색">
+              <span>선</span>
+              <input type="color" value={selectedEl?.style?.borderColor ?? '#111111'} onChange={e => updateStyle(selected, { borderColor: e.target.value })} className={styles.colorInput} />
+            </label>
+            <div className={styles.sep} />
+            {[['bl','↙'],['br','↘'],['tl','↖'],['tr','↗']].map(([dir, icon]) => (
+              <button key={dir} className={`${styles.propBtn} ${selectedEl?.style?.tailDir === dir ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { tailDir: dir })} title={`꼬리 ${dir}`}>{icon}</button>
+            ))}
+            <div className={styles.sep} />
+          </>
+        )}
 
         <button className={`${styles.propBtn} ${(selectedEl?.style?.objectFit ?? 'cover') === 'contain' ? styles.propActive : ''}`} onClick={() => updateStyle(selected, { objectFit: (selectedEl?.style?.objectFit ?? 'cover') === 'cover' ? 'contain' : 'cover' })} disabled={!isImage}>Fit</button>
         <div className={styles.sep} />
@@ -241,6 +275,7 @@ export default function HomeEditor() {
       {/* ── 메인 툴바 ── */}
       <div className={styles.toolbar}>
         <button onClick={addText} className={styles.btn}>텍스트</button>
+        <button onClick={addBubble} className={styles.btn}>말풍선</button>
         <label className={styles.btn}>
           {uploading ? '업로드 중...' : '이미지'}
           <input type="file" accept="image/*" onChange={addImage} disabled={uploading} style={{ display: 'none' }} />
@@ -290,17 +325,20 @@ export default function HomeEditor() {
       {panel === 'bg' && (
         <div className={styles.panel}>
           <div className={styles.bgGrid}>
-            {BACKGROUNDS.map(bg => (
-              <button
-                key={bg.id}
-                className={`${styles.bgItem} ${bgColor === bg.color ? styles.bgItemActive : ''}`}
-                style={{ background: bg.src ? `url(${bg.src}) center/cover` : bg.color }}
-                onClick={() => { setBgColor(bg.color); setPanel(null) }}
-                title={bg.label}
-              >
-                <span className={styles.bgLabel}>{bg.label}</span>
-              </button>
-            ))}
+            {BACKGROUNDS.map(bg => {
+              const isActive = bg.src ? bgImage === bg.src : (!bgImage && bgColor === bg.color)
+              return (
+                <button
+                  key={bg.id}
+                  className={`${styles.bgItem} ${isActive ? styles.bgItemActive : ''}`}
+                  style={{ background: bg.src ? `url(${bg.src}) center/cover` : bg.color }}
+                  onClick={() => { setBgColor(bg.color); setBgImage(bg.src ?? null); setPanel(null) }}
+                  title={bg.label}
+                >
+                  <span className={styles.bgLabel}>{bg.label}</span>
+                </button>
+              )
+            })}
             {/* 커스텀 색상 */}
             <label className={`${styles.bgItem} ${styles.bgCustom}`} title="커스텀">
               <span className={styles.bgLabel}>직접</span>
@@ -311,7 +349,15 @@ export default function HomeEditor() {
       )}
 
       {/* ── 캔버스 ── */}
-      <div ref={canvasRef} className={styles.canvas} style={{ background: bgColor }} onClick={onCanvasClick}>
+      <div
+        ref={canvasRef}
+        className={styles.canvas}
+        style={bgImage
+          ? { backgroundColor: bgColor, backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          : { background: bgColor }
+        }
+        onClick={onCanvasClick}
+      >
         {elements.map(el => (
           <div
             key={el.id}
@@ -319,7 +365,7 @@ export default function HomeEditor() {
             style={{ left: `${el.x}%`, top: `${el.y}%`, width: `${el.width}%`, height: `${el.height}%`, opacity: el.style?.opacity ?? 1, cursor: editing === el.id ? 'text' : 'grab' }}
             onMouseDown={e => onElementMouseDown(e, el)}
             onTouchStart={e => onElementMouseDown(e, el)}
-            onDoubleClick={e => { e.stopPropagation(); if (el.type === 'text') setEditing(el.id) }}
+            onDoubleClick={e => { e.stopPropagation(); if (el.type === 'text' || el.type === 'bubble') setEditing(el.id) }}
           >
             {el.type === 'image' && (
               <img src={el.content} alt="" className={styles.img} style={{ objectFit: el.style?.objectFit ?? 'cover' }} draggable={false} />
@@ -348,6 +394,44 @@ export default function HomeEditor() {
                   className={styles.textContent}
                   style={{ fontSize: `${el.style?.fontSize ?? 16}px`, fontWeight: el.style?.fontWeight, fontStyle: el.style?.fontStyle, color: el.style?.color, textAlign: el.style?.textAlign, fontFamily: el.style?.fontFamily }}
                 >{el.content}</p>
+              )
+            )}
+
+            {el.type === 'bubble' && (
+              editing === el.id ? (
+                <textarea
+                  autoFocus className={styles.bubbleEdit}
+                  value={el.content}
+                  onChange={e => updateEl(el.id, { content: e.target.value })}
+                  onBlur={() => setEditing(null)}
+                  onKeyDown={e => { if (e.key === 'Escape') setEditing(null) }}
+                  onMouseDown={e => e.stopPropagation()}
+                  onClick={e => e.stopPropagation()}
+                  style={{
+                    backgroundColor: el.style?.bgColor ?? '#ffffff',
+                    border: `2px solid ${el.style?.borderColor ?? '#111111'}`,
+                    color: el.style?.color ?? '#111111',
+                    fontSize: `${el.style?.fontSize ?? 14}px`,
+                    fontWeight: el.style?.fontWeight, fontStyle: el.style?.fontStyle,
+                    fontFamily: el.style?.fontFamily, textAlign: el.style?.textAlign ?? 'center',
+                  }}
+                />
+              ) : (
+                <div
+                  className={`${styles.bubble} ${styles[`tail_${el.style?.tailDir ?? 'bl'}`]}`}
+                  style={{
+                    '--bubble-bg': el.style?.bgColor ?? '#ffffff',
+                    '--bubble-border': el.style?.borderColor ?? '#111111',
+                    backgroundColor: el.style?.bgColor ?? '#ffffff',
+                    border: `2px solid ${el.style?.borderColor ?? '#111111'}`,
+                    color: el.style?.color ?? '#111111',
+                    fontSize: `${el.style?.fontSize ?? 14}px`,
+                    fontWeight: el.style?.fontWeight, fontStyle: el.style?.fontStyle,
+                    fontFamily: el.style?.fontFamily, textAlign: el.style?.textAlign ?? 'center',
+                  }}
+                >
+                  <p className={styles.bubbleText}>{el.content}</p>
+                </div>
               )
             )}
 

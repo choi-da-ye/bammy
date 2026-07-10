@@ -54,7 +54,10 @@ export default function HomeProfile() {
 
       <div
         className={styles.canvas}
-        style={{ background: homepage?.bg_color ?? '#f7f7f5' }}
+        style={homepage?.bg_image
+          ? { backgroundColor: homepage.bg_color ?? '#f7f7f5', backgroundImage: `url(${homepage.bg_image})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          : { background: homepage?.bg_color ?? '#f7f7f5' }
+        }
       >
         {!homepage || homepage.elements?.length === 0 ? (
           <div className={styles.emptyCanvas}>
@@ -99,6 +102,25 @@ export default function HomeProfile() {
                 }}>
                   {el.content}
                 </p>
+              )}
+              {el.type === 'bubble' && (
+                <div
+                  className={`hp-bubble hp-tail-${el.style?.tailDir ?? 'bl'}`}
+                  style={{
+                    '--bubble-bg': el.style?.bgColor ?? '#ffffff',
+                    '--bubble-border': el.style?.borderColor ?? '#111111',
+                    backgroundColor: el.style?.bgColor ?? '#ffffff',
+                    border: `2px solid ${el.style?.borderColor ?? '#111111'}`,
+                    color: el.style?.color ?? '#111111',
+                    fontSize: el.style?.fontSize ? `${el.style.fontSize}px` : undefined,
+                    fontWeight: el.style?.fontWeight,
+                    fontStyle: el.style?.fontStyle,
+                    fontFamily: el.style?.fontFamily,
+                    textAlign: el.style?.textAlign ?? 'center',
+                  }}
+                >
+                  <p>{el.content}</p>
+                </div>
               )}
             </div>
           ))

@@ -55,7 +55,13 @@ export default function HomeFeed() {
               <p className={styles.username}>@{item.profiles?.username}</p>
             </div>
           </div>
-          <div className={styles.preview} style={{ background: item.bg_color }}>
+          <div
+            className={styles.preview}
+            style={item.bg_image
+              ? { backgroundColor: item.bg_color, backgroundImage: `url(${item.bg_image})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+              : { background: item.bg_color }
+            }
+          >
             {item.elements?.length === 0 && (
               <p className={styles.previewEmpty}>홈피를 꾸미는 중...</p>
             )}
@@ -88,6 +94,25 @@ export default function HomeFeed() {
                   }}>
                     {el.content}
                   </p>
+                )}
+                {el.type === 'bubble' && (
+                  <div
+                    className={`hp-bubble hp-tail-${el.style?.tailDir ?? 'bl'}`}
+                    style={{
+                      '--bubble-bg': el.style?.bgColor ?? '#ffffff',
+                      '--bubble-border': el.style?.borderColor ?? '#111111',
+                      backgroundColor: el.style?.bgColor ?? '#ffffff',
+                      border: `2px solid ${el.style?.borderColor ?? '#111111'}`,
+                      color: el.style?.color ?? '#111111',
+                      fontSize: el.style?.fontSize ? `${el.style.fontSize}px` : undefined,
+                      fontWeight: el.style?.fontWeight,
+                      fontStyle: el.style?.fontStyle,
+                      fontFamily: el.style?.fontFamily,
+                      textAlign: el.style?.textAlign ?? 'center',
+                    }}
+                  >
+                    <p>{el.content}</p>
+                  </div>
                 )}
               </div>
             ))}

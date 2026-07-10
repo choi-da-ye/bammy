@@ -17,11 +17,15 @@ export const STICKER_CATEGORIES = [
   },
 ]
 
+// vite base URL — 배포 경로(/bammy/ 등)를 자동으로 prefix
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+const p = (path) => `${base}${path}`
+
 // 이미지 스티커 — public/stickers/ 에 PNG 추가 후 여기서 등록
 export const IMAGE_STICKERS = [
-  { id: 'item_01', label: '훈장', src: '/stickers/item_01.png' },
-  { id: 'item_02', label: '고양이', src: '/stickers/item_02.png' },
-  { id: 'item_03', label: '강아지', src: '/stickers/item_03.png' },
+  { id: 'item_01', label: '훈장',   src: p('/stickers/item_01.png') },
+  { id: 'item_02', label: '고양이', src: p('/stickers/item_02.png') },
+  { id: 'item_03', label: '강아지', src: p('/stickers/item_03.png') },
 ]
 
 export const BACKGROUNDS = [
@@ -39,7 +43,7 @@ export const BACKGROUNDS = [
   { id: 'charcoal', label: '차콜',     color: '#37474f' },
   { id: 'navy',     label: '네이비',   color: '#1a237e' },
   { id: 'black',    label: '블랙',     color: '#111111' },
-  // ── 이미지 배경 — public/backgrounds/ 에 파일 추가 후 주석 해제 ──
-  { id: 'bg_01',   label: '농장1',  color: 'transparent', src: '/backgrounds/bg_01.png' },
-  { id: 'bg_02', label: '농장2',      color: 'transparent', src: '/backgrounds/bg_02.png' },
+  // ── 이미지 배경 — public/backgrounds/ 에 파일 추가 후 여기서 등록 ──
+  { id: 'bg_01', label: '농장1', color: 'transparent', src: p('/backgrounds/bg_01.png') },
+  { id: 'bg_02', label: '농장2', color: 'transparent', src: p('/backgrounds/bg_02.png') },
 ]

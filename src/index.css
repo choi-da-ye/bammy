@@ -57,3 +57,30 @@ input, textarea {
   background: var(--color-surface);
   color: var(--color-text);
 }
+
+/* ── 말풍선 공통 (HomeFeed · HomeProfile · HomeEditor에서 공유) ── */
+.hp-bubble {
+  width: 100%; height: 100%;
+  border-radius: 12px;
+  padding: 4px 8px; box-sizing: border-box;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  overflow: visible;
+}
+.hp-bubble > p {
+  margin: 0; width: 100%;
+  white-space: pre-wrap; word-break: break-word; line-height: 1.3;
+  overflow: hidden; pointer-events: none;
+}
+.hp-tail-bl::before, .hp-tail-br::before, .hp-tail-tl::before, .hp-tail-tr::before,
+.hp-tail-bl::after,  .hp-tail-br::after,  .hp-tail-tl::after,  .hp-tail-tr::after {
+  content: ''; position: absolute; width: 0; height: 0;
+}
+.hp-tail-bl::before { top: 100%; left: 18%; border: 10px solid transparent; border-top-color: var(--bubble-border); }
+.hp-tail-bl::after  { top: calc(100% - 2px); left: 18%; border: 8px solid transparent; border-top-color: var(--bubble-bg); z-index: 1; }
+.hp-tail-br::before { top: 100%; right: 18%; border: 10px solid transparent; border-top-color: var(--bubble-border); }
+.hp-tail-br::after  { top: calc(100% - 2px); right: 18%; border: 8px solid transparent; border-top-color: var(--bubble-bg); z-index: 1; }
+.hp-tail-tl::before { bottom: 100%; left: 18%; border: 10px solid transparent; border-bottom-color: var(--bubble-border); }
+.hp-tail-tl::after  { bottom: calc(100% - 2px); left: 18%; border: 8px solid transparent; border-bottom-color: var(--bubble-bg); z-index: 1; }
+.hp-tail-tr::before { bottom: 100%; right: 18%; border: 10px solid transparent; border-bottom-color: var(--bubble-border); }
+.hp-tail-tr::after  { bottom: calc(100% - 2px); right: 18%; border: 8px solid transparent; border-bottom-color: var(--bubble-bg); z-index: 1; }

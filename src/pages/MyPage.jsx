@@ -44,6 +44,7 @@ export default function MyPage() {
           <p className={styles.name}>{profile?.name}</p>
           <p className={styles.username}>@{profile?.username}</p>
         </div>
+        <Link to="/home/edit" className={styles.editBtn}>홈피 꾸미기</Link>
       </div>
 
       <div className={styles.tabs}>

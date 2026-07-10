@@ -123,3 +123,20 @@
   background: var(--color-primary-hover);
   transform: scale(1.08);
 }
+
+@media (max-width: 480px) {
+  .inner { padding: 0 12px; gap: 6px; }
+  .logo { font-size: 1.1rem; }
+  .gnbLink { padding: 6px 7px; font-size: 0.82rem; }
+  .username {
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .logoutBtn { padding: 6px 6px; font-size: 0.82rem; }
+  .loginBtn  { padding: 6px 6px; font-size: 0.82rem; }
+  .writeBtn  { padding: 6px 10px; font-size: 0.82rem; }
+  .main { padding: 16px 12px; }
+  .fab { bottom: 16px; right: 16px; width: 44px; height: 44px; font-size: 1.1rem; }
+}

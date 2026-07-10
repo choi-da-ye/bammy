@@ -85,3 +85,7 @@
   font-weight: 500;
   text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+  .card { padding: 24px 16px; margin: 20px auto; }
+}

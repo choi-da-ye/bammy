@@ -1,0 +1,247 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── 공통 버튼 ── */
+.btn {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px;
+  background: var(--color-primary); color: var(--color-surface);
+  border-radius: var(--radius); font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; border: none; font-family: inherit; line-height: 1.4;
+  white-space: nowrap; transition: background 0.15s;
+}
+.btn:hover:not(:disabled) { background: var(--color-primary-hover); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btnActive { background: var(--color-primary-hover) !important; }
+
+.btnDanger {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px;
+  background: var(--color-danger); color: #fff;
+  border-radius: var(--radius); font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; border: none; font-family: inherit; line-height: 1.4;
+  white-space: nowrap; transition: opacity 0.15s;
+}
+.btnDanger:hover:not(:disabled) { opacity: 0.85; }
+.btnDanger:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.btnGhost {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px;
+  border: 1px solid var(--color-border); border-radius: var(--radius);
+  font-size: 0.875rem; color: var(--color-text-muted);
+  cursor: pointer; background: none; font-family: inherit; line-height: 1.4;
+  white-space: nowrap; transition: border-color 0.15s, color 0.15s;
+}
+.btnGhost:hover { border-color: var(--color-border-strong); color: var(--color-text); }
+.btnGhostActive { border-color: var(--color-border-strong) !important; color: var(--color-text) !important; }
+
+/* ── 속성 바 ── */
+.propBar {
+  display: flex; align-items: center; gap: 3px; flex-wrap: wrap;
+  padding: 6px 12px; min-height: 40px;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius);
+}
+
+.propBtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 4px 7px; min-width: 28px;
+  border: 1px solid transparent; border-radius: 5px;
+  font-size: 0.82rem; font-family: inherit;
+  cursor: pointer; background: none; color: var(--color-text);
+  white-space: nowrap; transition: background 0.1s, border-color 0.1s;
+}
+.propBtn:hover:not(:disabled) { background: var(--color-hover); }
+.propBtn:disabled { opacity: 0.28; cursor: not-allowed; }
+.propActive { background: var(--color-hover) !important; border-color: var(--color-border-strong) !important; }
+.bold { font-weight: 700; }
+.italic { font-style: italic; }
+
+.propSelect {
+  padding: 4px 6px; border: 1px solid var(--color-border); border-radius: 5px;
+  font-size: 0.8rem; background: var(--color-surface); color: var(--color-text);
+  cursor: pointer; font-family: inherit;
+}
+.propSelect:disabled { opacity: 0.28; cursor: not-allowed; }
+.propSelect:focus { outline: none; border-color: var(--color-border-strong); }
+
+.propNumber {
+  width: 50px; padding: 4px 6px;
+  border: 1px solid var(--color-border); border-radius: 5px;
+  font-size: 0.8rem; background: var(--color-surface); color: var(--color-text);
+  text-align: center; font-family: inherit;
+}
+.propNumber:disabled { opacity: 0.28; cursor: not-allowed; }
+.propNumber:focus { outline: none; border-color: var(--color-border-strong); }
+
+.propRange { width: 72px; accent-color: var(--color-primary); cursor: pointer; }
+.propRange:disabled { opacity: 0.28; cursor: not-allowed; }
+
+.opacityWrap {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.8rem; color: var(--color-text-muted);
+}
+.opacityVal { font-size: 0.78rem; color: var(--color-text-muted); min-width: 30px; }
+.propDisabled { opacity: 0.28; pointer-events: none; }
+
+.colorLabel {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 8px; border: 1px solid var(--color-border); border-radius: 5px;
+  font-size: 0.82rem; color: var(--color-text-muted); cursor: pointer; white-space: nowrap;
+}
+.colorLabel:hover:not(.propDisabled) { border-color: var(--color-border-strong); }
+.colorA { font-weight: 700; font-size: 0.9rem; text-decoration: underline; text-underline-offset: 3px; }
+.colorInput { width: 20px; height: 20px; border: none; border-radius: 3px; cursor: pointer; padding: 0; background: none; }
+
+.sep { width: 1px; height: 18px; background: var(--color-border); flex-shrink: 0; margin: 0 2px; }
+.spacer { flex: 1; min-width: 8px; }
+
+/* ── 메인 툴바 ── */
+.toolbar {
+  display: flex; align-items: center; gap: 6px; padding: 8px 12px;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius);
+}
+
+/* ── 패널 공통 ── */
+.panel {
+  padding: 12px 14px;
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius);
+}
+
+.panelTabs {
+  display: flex; gap: 4px; margin-bottom: 10px;
+}
+.panelTab {
+  padding: 4px 12px; border-radius: 5px; font-size: 0.82rem;
+  cursor: pointer; background: none; border: 1px solid transparent;
+  color: var(--color-text-muted); font-family: inherit; transition: background 0.1s;
+}
+.panelTab:hover { background: var(--color-hover); color: var(--color-text); }
+.panelTabActive { background: var(--color-hover); border-color: var(--color-border-strong); color: var(--color-text); font-weight: 600; }
+
+/* ── 스티커 그리드 ── */
+.stickerGrid {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.stickerItem {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; border-radius: 8px;
+  cursor: pointer; background: none; border: 1px solid transparent;
+  transition: background 0.1s, transform 0.1s, border-color 0.1s;
+  padding: 0;
+}
+.stickerItem:hover { background: var(--color-hover); transform: scale(1.18); border-color: var(--color-border); }
+
+/* ── 배경 그리드 ── */
+.bgGrid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.bgItem {
+  position: relative;
+  width: 52px; height: 52px;
+  border-radius: 8px; cursor: pointer;
+  border: 2px solid var(--color-border);
+  transition: transform 0.1s, border-color 0.1s;
+  overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0; background: none;
+}
+.bgItem:hover { transform: scale(1.08); border-color: var(--color-border-strong); }
+.bgItemActive { border-color: var(--color-primary) !important; outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.bgLabel {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: -0.01em;
+  color: rgba(255,255,255,0.95); text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+  padding-bottom: 3px;
+  position: relative; z-index: 1;
+}
+.bgCustom {
+  background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red) !important;
+  cursor: pointer;
+}
+
+/* ── 캔버스 ── */
+.canvas {
+  width: 100%; aspect-ratio: 1;
+  border: 1px solid var(--color-border); border-radius: var(--radius);
+  position: relative; overflow: hidden; cursor: default; user-select: none;
+  touch-action: none; /* 드래그 중 스크롤 방지 */
+}
+
+.element { position: absolute; box-sizing: border-box; }
+.selected { outline: 2px solid var(--color-primary); outline-offset: 0; }
+
+.img { width: 100%; height: 100%; display: block; pointer-events: none; }
+
+/* 이모지 스티커 — container queries로 부모 크기에 맞게 자동 스케일 */
+.stickerWrap {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  container-type: size; pointer-events: none;
+}
+.stickerEmoji {
+  font-size: min(100cqw, 100cqh);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+
+.textContent {
+  margin: 0; padding: 4px 6px;
+  width: 100%; height: 100%; overflow: hidden;
+  white-space: pre-wrap; word-break: break-word; line-height: 1.4;
+  box-sizing: border-box;
+}
+.textEdit {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; resize: none;
+  border: none; outline: 2px dashed var(--color-primary);
+  background: var(--color-surface); opacity: 0.93;
+  padding: 4px 6px; box-sizing: border-box;
+  line-height: 1.4; cursor: text; font-family: inherit;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+.resizeHandle {
+  position: absolute; right: 0; bottom: 0;
+  width: 14px; height: 14px;
+  background: var(--color-primary); border-radius: 0 0 3px 0;
+  cursor: se-resize; z-index: 1;
+}
+
+.hint {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; color: var(--color-text-muted); opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  /* 속성 바: 가로 스크롤 */
+  .propBar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .propBar::-webkit-scrollbar { display: none; }
+
+  /* 툴바: 줄바꿈 허용 */
+  .toolbar { flex-wrap: wrap; gap: 5px; padding: 8px 10px; }
+
+  /* 패널 안 스티커 그리드: 높이 제한 + 스크롤 */
+  .stickerGrid { max-height: 160px; overflow-y: auto; }
+
+  /* 배경 그리드 */
+  .bgGrid { gap: 6px; }
+  .bgItem { width: 44px; height: 44px; }
+
+  /* 버튼 패딩 축소 */
+  .btn, .btnGhost, .btnDanger { padding: 6px 10px; font-size: 0.82rem; }
+}
+
+@media (max-width: 480px) {
+  .propNumber { width: 42px; }
+  .propRange  { width: 56px; }
+}

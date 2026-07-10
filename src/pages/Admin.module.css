@@ -193,18 +193,64 @@
   color: var(--color-danger);
 }
 
+/* ── 태블릿 (640px 이하) ── */
+@media (max-width: 640px) {
+  .layout { gap: 16px; }
+
+  .item { padding: 12px 14px; gap: 8px; }
+
+  .name { font-size: 0.9rem; }
+
+  .roleBtn { padding: 5px 9px; font-size: 0.78rem; }
+}
+
+/* ── 모바일 (480px 이하) ── */
 @media (max-width: 480px) {
-  .layout {
-    flex-direction: column;
-  }
+  /* 사이드바 → 상단 탭 바 */
+  .layout { flex-direction: column; gap: 12px; }
+
   .sidebar {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 12px;
+    gap: 6px;
+    padding: 8px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
+  .sidebar::-webkit-scrollbar { display: none; }
+
   .sidebarTitle {
     margin-bottom: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
+
+  .menuItem {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 12px; /* 터치 타겟 확보 */
+    min-height: 36px;
+  }
+
+  /* 회원 목록 아이템: 이름/아이디는 위, 배지+버튼은 아래 */
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .info { min-width: 0; }
+
+  .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* 카테고리 폼 */
+  .catForm { gap: 6px; }
+  .catInput { font-size: 0.875rem; }
+
+  .heading { font-size: 1rem; }
 }

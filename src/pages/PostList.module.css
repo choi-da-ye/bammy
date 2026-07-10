@@ -114,3 +114,8 @@
   color: var(--color-text-muted);
   padding: 60px 0;
 }
+
+@media (max-width: 480px) {
+  .pageTitle { font-size: 1.05rem; }
+  .link { padding: 12px 14px; }
+}

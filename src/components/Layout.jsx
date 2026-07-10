@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         <div className={styles.inner}>
           <Link to="/" className={styles.logo}>Bammy</Link>
           <nav className={styles.gnb}>
-            <Link to="/" className={styles.gnbLink}>갤러리</Link>
+            <Link to="/gallery" className={styles.gnbLink}>갤러리</Link>
             <Link to="/posts" className={styles.gnbLink}>게시판</Link>
           </nav>
           <div className={styles.nav}>
